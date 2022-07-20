@@ -1,3 +1,11 @@
 # Preactice-Repository
-E
-Bryant was here o_o
+## For Connor
+Name:
+
+Protagonist:
+
+Antagonist:
+
+Rewards System/ Currency:
+
+How to win:
