@@ -17,6 +17,8 @@ public class Movement : MonoBehaviour
     public LayerMask whatIsGround;
     public float jumpForce;
     // Start is called before the first frame update
+    public int jumps = 2;
+    public int dashes = 1;
     void Start() {
         
     }
@@ -41,11 +43,24 @@ public class Movement : MonoBehaviour
         currentScale.x *= -1;
         transform.localScale = currentScale;
     }
-
+    
     // Update is called once per frame
     void Update() {
-        if(Input.GetKeyDown(KeyCode.UpArrow) && onGround) {
-            player.velocity = Vector2.up * jumpForce;
+        if(onGround){
+            jumps = 2;
         }
+        if(Input.GetKeyDown(KeyCode.UpArrow) && jumps != 0) {
+            player.velocity = Vector2.up * jumpForce;
+            jumps--;
+        }
+        // if(Input.GetKeyDown(KeyCode.RightShift) && Input.GetAxis("Horizontal")){
+        //     player.velocity.y  = 0;
+        //     player.velocity = new Vector2(speed*5, player.velocity.y);
+        //     if(playerInput < 0 && facingRight){
+        //         PlayerFlipper();
+        //     } else if(playerInput > 0 && !facingRight) {
+        //         PlayerFlipper();
+        //     }
+//        }
     }
 }
