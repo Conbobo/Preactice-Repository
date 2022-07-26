@@ -19,8 +19,9 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     public int jumps = 2;
     public int dashes = 1;
+    public Transform start;
     void Start() {
-        
+        transform.position = start.position;
     }
     void FixedUpdate() {
         onGround = Physics2D.OverlapCircle(feet.position, groundDist, whatIsGround);
@@ -53,14 +54,14 @@ public class Movement : MonoBehaviour
             player.velocity = Vector2.up * jumpForce;
             jumps--;
         }
-        // if(Input.GetKeyDown(KeyCode.RightShift) && Input.GetAxis("Horizontal")){
-        //     player.velocity.y  = 0;
-        //     player.velocity = new Vector2(speed*5, player.velocity.y);
-        //     if(playerInput < 0 && facingRight){
-        //         PlayerFlipper();
-        //     } else if(playerInput > 0 && !facingRight) {
-        //         PlayerFlipper();
-        //     }
-//        }
+    //     if(Input.GetKeyDown(KeyCode.RightShift) && Input.GetAxis("Horizontal")){
+    //         player.velocity.y  = 0;
+    //         player.velocity = new Vector2(speed*5, player.velocity.y);
+    //         if(playerInput < 0 && facingRight){
+    //             PlayerFlipper();
+    //         } else if(playerInput > 0 && !facingRight) {
+    //             PlayerFlipper();
+    //         }
+    //    }
     }
 }
