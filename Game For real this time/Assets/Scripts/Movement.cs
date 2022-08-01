@@ -19,10 +19,6 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     public int jumps = 2;
     public int dashes = 1;
-    public Transform start;
-    void Start() {
-        transform.position = start.position;
-    }
     void FixedUpdate() {
         onGround = Physics2D.OverlapCircle(feet.position, groundDist, whatIsGround);
 
