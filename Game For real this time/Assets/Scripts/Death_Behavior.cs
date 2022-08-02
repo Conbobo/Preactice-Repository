@@ -8,16 +8,14 @@ public class Death_Behavior : MonoBehaviour
 {
     public string level;
     public GameObject[] lives;
-    public Transform[] checkpoints;
+
     public int currentLives = 3;
-    private int currentCPIndex = 0;
+
+    public Transform start;
+    private Vector3 lastCP;
     void Start(){
-        transform.position = checkpoints[currentCPIndex].position;
-    }
-    void Update(){
-        for(int i = 0; i < checkpoints.GetLength(0); i++) {
-            Debug.Log("Checkpoint " + i + ": " + checkpoints[i].position);
-        }
+        transform.position = start.position;
+        lastCP = start.position;
     }
     public int loseLife(){
         currentLives--;
@@ -31,15 +29,13 @@ public class Death_Behavior : MonoBehaviour
                 Destroy(other.gameObject);
                 SceneManager.LoadScene(level); 
             }else{
-                transform.position = checkpoints[currentCPIndex].position;
+                transform.position = lastCP;
             }
         }
     }
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.gameObject.CompareTag("Checkpoint")){
-            Transform CPPos = transform;
-            currentCPIndex++;
-            checkpoints[currentCPIndex] = CPPos;
+            lastCP = other.gameObject.transform.position;
             Destroy(other.gameObject);
         }
     }
