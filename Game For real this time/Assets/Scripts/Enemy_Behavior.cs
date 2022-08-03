@@ -11,22 +11,24 @@ public class Enemy_Behavior : MonoBehaviour
     public float enemySpeed;
     private GameObject player;
     public float sightDistance;
+    public GameObject fish;
+    public Transform unconsumer;
     // Start is called before the first frame update
     void Start()
     {
-        
+        FishFling();
     }
 
     // Update is called once per frame
     void Update()
     {
-        player = GameObject.FindWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
+        Debug.Log(Vector3.Distance(player.transform.position, enemyBody.position)); 
         if(Vector3.Distance(player.transform.position, enemyBody.position) <= sightDistance){
-            
+           
         }else{
             IdleEnemy();
         }
-        Debug.Log(Vector3.Distance(player.transform.position, enemyBody.position));
     }
     void IdleEnemy(){
         if(enemyBody.position.x >= edgeTwo.position.x){
@@ -47,5 +49,8 @@ public class Enemy_Behavior : MonoBehaviour
             currentPos.x += enemySpeed/100;
         }
         enemyBody.position = currentPos;
+    }
+    void FishFling(){
+        Instantiate(fish, unconsumer.position, transform.rotation);
     }
 }

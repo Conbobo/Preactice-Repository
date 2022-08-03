@@ -22,7 +22,12 @@ public class Death_Behavior : MonoBehaviour
         lives[currentLives].SetActive(false);
         return currentLives;
     } 
-    private void OnCollisionEnter2D(Collision2D other) {
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if(other.gameObject.CompareTag("Checkpoint")){
+            lastCP = other.gameObject.transform.position;
+            Destroy(other.gameObject);
+        }
         if(other.gameObject.CompareTag("Death")){
 
             if(loseLife() == 0) {
@@ -31,12 +36,6 @@ public class Death_Behavior : MonoBehaviour
             }else{
                 transform.position = lastCP;
             }
-        }
-    }
-    private void OnTriggerEnter2D(Collider2D other) {
-        if(other.gameObject.CompareTag("Checkpoint")){
-            lastCP = other.gameObject.transform.position;
-            Destroy(other.gameObject);
         }
     }
     
