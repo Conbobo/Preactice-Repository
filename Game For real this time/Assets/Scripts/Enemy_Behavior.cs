@@ -13,19 +13,42 @@ public class Enemy_Behavior : MonoBehaviour
     public float sightDistance;
     public GameObject fish;
     public Transform unconsumer;
+    private bool isReadyToShoot = true;
+    private Transform ogPosition;
+    private Transform ogFlippedPosition;
     // Start is called before the first frame update
     void Start()
     {
-        FishFling();
+        
+        ogFlippedPosition = enemyBody;
+        Vector3 flipScale = enemyBody.localScale;
+        flipScale.x *= -1;
+        ogFlippedPosition.localScale = flipScale;
+        ogPosition = enemyBody;
     }
 
+    IEnumerator ShootTimer(){
+        isReadyToShoot = false;
+        FishFling();
+        yield return new WaitForSeconds(1.5f);
+        isReadyToShoot = true;
+    }
     // Update is called once per frame
     void Update()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        Debug.Log(Vector3.Distance(player.transform.position, enemyBody.position)); 
         if(Vector3.Distance(player.transform.position, enemyBody.position) <= sightDistance){
-           
+           if(isReadyToShoot){
+               StartCoroutine("ShootTimer"); 
+           }
+           if(enemyBody.position.x < player.transform.position.x){
+                Vector3 currentScale = ogPosition.localScale;
+                enemyBody.localScale = currentScale;
+           }
+           if(enemyBody.position.x > player.transform.position.x){
+                Vector3 currentScale = ogFlippedPosition.localScale;
+                enemyBody.localScale = currentScale;
+           }
         }else{
             IdleEnemy();
         }
@@ -51,6 +74,7 @@ public class Enemy_Behavior : MonoBehaviour
         enemyBody.position = currentPos;
     }
     void FishFling(){
-        Instantiate(fish, unconsumer.position, transform.rotation);
+        Instantiate(fish, unconsumer.position, Quaternion.identity);
+        
     }
 }

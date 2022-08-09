@@ -7,16 +7,21 @@ public class FishBehavior : MonoBehaviour
 
     public Rigidbody2D fishBody;
     public float speed;
+    private GameObject player;
 
     
     void Start()
     {
-        fishBody.velocity = new Vector2(speed * -1, fishBody.velocity.y);
+        player = GameObject.FindGameObjectWithTag("Player");
+        if(transform.position.x > player.transform.position.x){
+            speed *= -1;
+        }
+        fishBody.velocity = new Vector2(speed, fishBody.velocity.y);
         StartCoroutine("DeathTimer");
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if(other.CompareTag("Player")){
+        if(other.CompareTag("Player") || other.CompareTag("Wall")){
             Destroy(gameObject);
         }
     }
