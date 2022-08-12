@@ -8,15 +8,26 @@ public class FishBehavior : MonoBehaviour
     public Rigidbody2D fishBody;
     public float speed;
     private GameObject player;
-
+    private Quaternion playerZaiNaLi;
     
+
+
     void Start()
     {
+        Vector2 enemyPos = transform.position;
         player = GameObject.FindGameObjectWithTag("Player");
         if(transform.position.x > player.transform.position.x){
             speed *= -1;
         }
-        fishBody.velocity = new Vector2(speed, fishBody.velocity.y);
+        if(transform.position.x < player.transform.position.x){
+            speed *= -1;
+        }
+        float step = speed * Time.deltaTime;
+        // playerZaiNaLi = Quaternion.RotateTowards(transform.rotation, player.transform.rotation, step);
+        Vector2 direction = enemyPos - (Vector2)player.transform.position;
+        fishBody.velocity = speed*direction;
+        Debug.Log(direction);
+        // transform.rotation = Quaternion.Euler(0, 0, direction);
         StartCoroutine("DeathTimer");
     }
 

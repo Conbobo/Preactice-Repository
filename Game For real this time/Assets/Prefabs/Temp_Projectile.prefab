@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishBody: {fileID: 5680008666344944710}
-  speed: 8
+  speed: 0.8
 --- !u!50 &5680008666344944710
 Rigidbody2D:
   serializedVersion: 4
@@ -113,12 +113,12 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 6
+  m_Constraints: 4
 --- !u!60 &5680008666344944709
 PolygonCollider2D:
   m_ObjectHideFlags: 0

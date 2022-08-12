@@ -14,17 +14,11 @@ public class Enemy_Behavior : MonoBehaviour
     public GameObject fish;
     public Transform unconsumer;
     private bool isReadyToShoot = true;
-    private Transform ogPosition;
-    private Transform ogFlippedPosition;
+    public float unconsumerOffset;
+    private Quaternion fishRotation;
     // Start is called before the first frame update
     void Start()
     {
-        
-        ogFlippedPosition = enemyBody;
-        Vector3 flipScale = enemyBody.localScale;
-        flipScale.x *= -1;
-        ogFlippedPosition.localScale = flipScale;
-        ogPosition = enemyBody;
     }
 
     IEnumerator ShootTimer(){
@@ -41,12 +35,18 @@ public class Enemy_Behavior : MonoBehaviour
            if(isReadyToShoot){
                StartCoroutine("ShootTimer"); 
            }
-           if(enemyBody.position.x < player.transform.position.x){
-                Vector3 currentScale = ogPosition.localScale;
+           if(enemyBody.position.x < player.transform.position.x && enemyBody.localScale.x > 0){
+                Vector3 currentScale = enemyBody.localScale;
+                currentScale.x *= -1;
+                unconsumerOffset *= -1;
+                fishRotation.z -= 180;
                 enemyBody.localScale = currentScale;
            }
-           if(enemyBody.position.x > player.transform.position.x){
-                Vector3 currentScale = ogFlippedPosition.localScale;
+           if(enemyBody.position.x > player.transform.position.x && enemyBody.localScale.x < 0){
+                Vector3 currentScale = enemyBody.localScale;
+                currentScale.x *= -1;
+                unconsumerOffset *= -1;
+                fishRotation.z += 180;
                 enemyBody.localScale = currentScale;
            }
         }else{
@@ -74,7 +74,7 @@ public class Enemy_Behavior : MonoBehaviour
         enemyBody.position = currentPos;
     }
     void FishFling(){
-        Instantiate(fish, unconsumer.position, Quaternion.identity);
-        
+        fishRotation = fish.transform.rotation;
+        Instantiate(fish, unconsumer.position + new Vector3(unconsumerOffset, 0, 0), fishRotation);
     }
 }
